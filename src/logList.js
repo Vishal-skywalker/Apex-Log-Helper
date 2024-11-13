@@ -1,5 +1,5 @@
 /* global point */
-import SFConnection from './SFConnection.js';
+import SFConnection from '../lib/SFConnection.js';
 
 const sfHost = getUrlSearchParam('host');
 let con = null;
