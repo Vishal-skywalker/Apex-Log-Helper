@@ -1,0 +1,43 @@
+{
+  "name": "Apex Log Helper",
+  "description": "",
+  "version": "1.0",
+  "version_name": "1.0",
+  "action": {
+    "default_title": "Open apex log helper",
+    "default_popup": "src/options.html"
+  },
+  "permissions": [
+    "cookies",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://*.salesforce.com/*",
+    "https://*.salesforce-setup.com/*",
+    "https://*.force.com/*",
+    "https://*.cloudforce.com/*",
+    "https://*.visualforce.com/*",
+    "https://*.sfcrmapps.cn/*",
+    "https://*.sfcrmproducts.cn/*",
+    "https://*.salesforce.mil/*",
+    "https://*.force.mil/*",
+    "https://*.cloudforce.mil/*",
+    "https://*.visualforce.mil/*",
+    "https://*.crmforce.mil/*",
+    "https://*.force.com.mcas.ms/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [],
+      "matches": [
+        "https://*/*"
+      ],
+      "extension_ids": []
+    }
+  ],
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "src/service-worker.js",
+    "type": "module"
+  }
+}
