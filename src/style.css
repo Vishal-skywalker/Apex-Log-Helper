@@ -1,0 +1,18 @@
+.debug {
+    color: green;
+}
+
+.error {
+    color: red;
+}
+
+.line {
+    margin: 0;
+    /* height: 50px; */
+    line-height: 25px;
+}
+
+#renderedHeightContainer {
+    overflow-y: hidden;
+    overflow-x: auto;
+}

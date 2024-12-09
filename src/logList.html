@@ -1,15 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="logList.js" type="module" defer></script>
-    <script src="../lib/point.js" ></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="../lib/point.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Apex Log Helper | List</title>
 </head>
-<body>
+
+<body class="m-2">
     <p point-component="userInfo">Apex Log Helper | {{name}} | {{username}}</p>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
+    <table class="table table-sm table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>User Name</th>
+                <th>Log Length</th>
+                <th>Operation</th>
+                <th>Status</th>
+                <th>Duration (ms)</th>
+                <th>Start Time</th>
+            </tr>
+        </thead>
+        <tbody point-component="apexLogs">
+            <tr>
+                <td>
+                    <a href="{{Id|log_view_url}}" class="text-primary" target="_blank">View</a>
+                </td>
+                <td>{{LogUser.Name}}</td>
+                <td>{{LogLength}}</td>
+                <td>{{Operation}}</td>
+                <td>{{Status}}</td>
+                <td>{{DurationMilliseconds}}</td>
+                <td>{{StartTime|formatted_date}}</td>
+            </tr>
+        </tbody>
+    </table>
+
 </body>
+
 </html>
