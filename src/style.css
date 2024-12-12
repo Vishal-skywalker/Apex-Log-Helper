@@ -1,18 +1,28 @@
 .debug {
-    color: green;
+    color: rgb(145, 255, 82);
 }
 
 .error {
-    color: red;
+    color: rgb(255, 50, 50);
 }
 
 .line {
     margin: 0;
-    /* height: 50px; */
+    height: 25px;
     line-height: 25px;
+    white-space: nowrap;
 }
 
 #renderedHeightContainer {
     overflow-y: hidden;
     overflow-x: auto;
+}
+
+#totalHeightContainer {
+    overflow: auto;
+    padding: 10px;
+}
+
+body {
+    overflow: hidden;
 }
