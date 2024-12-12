@@ -17,7 +17,7 @@
         <thead>
             <tr>
                 <th>Action</th>
-                <th>User Name</th>
+                <th>Traced Entity</th>
                 <th>Log Length</th>
                 <th>Operation</th>
                 <th>Status</th>
@@ -30,7 +30,7 @@
                 <td>
                     <a href="{{Id|log_view_url}}" class="text-primary" target="_blank">View</a>
                 </td>
-                <td>{{LogUser.Name}}</td>
+                <td><a href="{{LogUserId|user_detail_url}}" class="text-primary" target="_blank">{{LogUser.Name}}</a></td>
                 <td>{{LogLength}}</td>
                 <td>{{Operation}}</td>
                 <td>{{Status}}</td>
