@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="logList.js" type="module" defer></script>
     <script src="../lib/point.js"></script>
@@ -12,12 +12,12 @@
 </head>
 
 <body class="m-2">
-    <p point-component="userInfo">Apex Log Helper | {{name}} | {{username}}</p>
+    <p point-component="userInfo">Apex Log Helper | {{name}} | {{username}} | {{orgName}} | {{type}}</p>
     <table class="table table-sm table-hover table-bordered">
         <thead>
             <tr>
                 <th>Action</th>
-                <th>User Name</th>
+                <th>Traced Entity</th>
                 <th>Log Length</th>
                 <th>Operation</th>
                 <th>Status</th>
@@ -30,7 +30,7 @@
                 <td>
                     <a href="{{Id|log_view_url}}" class="text-primary" target="_blank">View</a>
                 </td>
-                <td>{{LogUser.Name}}</td>
+                <td><a href="{{LogUserId|user_detail_url}}" class="text-primary" target="_blank">{{LogUser.Name}}</a></td>
                 <td>{{LogLength}}</td>
                 <td>{{Operation}}</td>
                 <td>{{Status}}</td>

@@ -1,5 +1,5 @@
 /* global point */
-import { getConnection, getUrlSearchParam } from '../lib/SFConnection.js';
+import { getConnection, getUrlSearchParam, apiVersion } from '../lib/SFConnection.js';
 
 function setPointModifiers() {
     const pageUrl = chrome.runtime.getURL('src/logView.html');
@@ -13,19 +13,26 @@ function setPointModifiers() {
     point.modifier('log_view_url', (val) => {
         return `${pageUrl}?id=${val}&host=${host}`;
     });
+    point.modifier('user_detail_url', (val) => {
+        return `https://${host}/${val}?noredirect=1&isUserEntityOverride=1`;
+    });
 }
 
 let con = null;
 async function init() {
     setPointModifiers();
     con = await getConnection();
-    const r = await con.getUserInfo();
-    point.attach('userInfo', r);
+    processUserInfo(con);
     getLogs(con);
 }
 init();
 
+async function processUserInfo(con) {
+    const r = await con.getUserInfo();
+    point.attach('userInfo', r);
+}
+
 async function getLogs(con) {
-    const logs = await con.get('/services/data/v62.0/query/?q=' + encodeURI('SELECT Id, LogUser.Name, LogLength, Operation, Status, DurationMilliseconds, StartTime FROM ApexLog ORDER BY LastModifiedDate DESC'));
+    const logs = await con.get(`/services/data/v${apiVersion}.0/query/?q=${encodeURI('SELECT Id, LogUser.Name, LogUserId, LogLength, Operation, Status, DurationMilliseconds, StartTime FROM ApexLog ORDER BY LastModifiedDate DESC')}`);
     point.attach('apexLogs', logs.records);
 }
