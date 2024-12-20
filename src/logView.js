@@ -1,6 +1,7 @@
 import { getConnection, getUrlSearchParam, apiVersion } from '../lib/SFConnection.js';
 let totalItems = 0;
 let logList = [];
+let logs = logList;
 let windowWidth = window.innerWidth;
 
 const overScan = 5;
@@ -17,11 +18,40 @@ window.addEventListener('resize', e => {
     windowWidth = e.target.innerWidth;
 });
 
+const activeFilters = new Set();
+
+function setupLogFilter(elementId, className) {
+    document.getElementById(elementId).addEventListener('change', e => {
+        if (e.target.checked) {
+            activeFilters.add(className);
+        } else {
+            activeFilters.delete(className);
+        }
+        applyFilters();
+    });
+}
+
+function applyFilters() {
+    if (activeFilters.size === 0) {
+        logs = logList;
+    } else {
+        const filteredLogs = logList.filter(log => activeFilters.has(log.className));
+        logs = filteredLogs;
+    }
+    render();
+    totalHeightContainer.scroll(0, 0);
+}
+
+setupLogFilter('debug', 'line debug');
+setupLogFilter('error', 'line error');
+setupLogFilter('soql', 'line soql');
+
 async function init() {
     const con = await getConnection();
     const logId = getUrlSearchParam('id');
     const log = await con.get(`/services/data/v${apiVersion}.0/tooling/sobjects/ApexLog/${logId}/Body`);
     logList = parseLog(log);
+    logs = logList;
     totalItems = logList.length;
     renderedHeightContainer.style.height = `${totalItems * itemHeight}px`;
     render(null);
@@ -45,7 +75,7 @@ function parseLog(rawLog) {
 }
 
 function evalClassName(text) {
-    return 'line ' + (text.includes('USER_DEBUG') ? 'debug' : (text.includes('FATAL_ERROR') || text.includes('EXCEPTION_THROWN')) ? 'error' : '');
+    return 'line ' + (text.includes('USER_DEBUG') ? 'debug' : (text.includes('FATAL_ERROR') || text.includes('EXCEPTION_THROWN')) ? 'error' : text.includes('SOQL_EXECUTE_BEGIN') ? 'soql' : '');
 }
 
 function splitStringByWindowWidth(input, windowWidth) {
@@ -60,7 +90,7 @@ function splitStringByWindowWidth(input, windowWidth) {
     let currentLine = "";
 
     // Split the input string by spaces and iterate through words
-    const words = input.split(/(?<=,)| /);
+    const words = input.split(/(?<=\?)|(?<=&)|(?<=;)|(?<=,)| /);
     for (const word of words) {
         // Check if adding the word would exceed the max line length
         if ((currentLine.length + word.length + 1) <= maxCharsPerLine) {
@@ -84,12 +114,14 @@ function splitStringByWindowWidth(input, windowWidth) {
 }
 
 function render(e) {
+    totalItems = logs.length;
+    renderedHeightContainer.style.height = `${totalItems * itemHeight}px`;
     let scrollTop = e ? e.currentTarget.scrollTop : 0;
-    let startIndex = Math.min(Math.max(0, Math.floor(scrollTop / itemHeight) - overScan), totalItems - Math.floor(windowHeight / itemHeight) - 1);
+    let startIndex = Math.max(Math.min(Math.max(0, Math.floor(scrollTop / itemHeight) - overScan), totalItems - Math.floor(windowHeight / itemHeight) - 1), 0);
     let renderedItems = Math.floor(windowHeight / itemHeight) + 2 * overScan;
     renderedItems = Math.min(totalItems - startIndex, renderedItems);
     renderDiv.style.transform = `translateY(${startIndex * itemHeight}px)`;
-    const list = logList.slice(startIndex, startIndex + renderedItems)
+    const list = logs.slice(startIndex, startIndex + renderedItems);
     point.attach('log', list);
 }
 
@@ -102,10 +134,4 @@ function getRemainingHeight() {
     const viewportHeight = window.innerHeight;
     const remainingHeight = viewportHeight - totalTopHeight;
     return remainingHeight;
-}
-
-function getTextWidth(text) {
-    const div = document.getElementById("hidden-div");
-    div.innerText = text;
-    return div.clientWidth;
 }
