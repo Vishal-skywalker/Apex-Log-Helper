@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <div class="top-element row gx-5">
+    <div class="top-element row gx-5 mx-3 mt-3">
         <div class="col">
             <label for="debug">Debug only</label>
             <input type="checkbox" name="debug" id="debug">
@@ -22,8 +22,12 @@
             <label for="error">Show Errors</label>
             <input type="checkbox" name="error" id="error">
         </div>
+        <div class="col">
+            <label for="soql">Show SOQL</label>
+            <input type="checkbox" name="soql" id="soql">
+        </div>
     </div>
-    <div id="totalHeightContainer">
+    <div id="totalHeightContainer" class="pb-5">
         <div id="renderedHeightContainer">
             <div id="renderDiv">
                 <p point-component="log" class="{{className}}">{{text}}</p>

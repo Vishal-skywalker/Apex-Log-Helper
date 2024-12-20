@@ -6,6 +6,10 @@
     color: rgb(255, 50, 50);
 }
 
+.soql {
+    color: rgb(37, 219, 255);
+}
+
 .line {
     margin: 0;
     height: 25px;
