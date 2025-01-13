@@ -132,6 +132,6 @@ function getRemainingHeight() {
         totalTopHeight += element.offsetHeight;
     });
     const viewportHeight = window.innerHeight;
-    const remainingHeight = viewportHeight - totalTopHeight;
+    const remainingHeight = viewportHeight - totalTopHeight - 20;
     return remainingHeight;
 }
