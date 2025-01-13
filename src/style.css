@@ -18,8 +18,9 @@
 }
 
 #renderedHeightContainer {
-    overflow-y: hidden;
-    overflow-x: auto;
+    /* overflow-y: hidden;
+    overflow-x: auto; */
+    min-height: 100%;
 }
 
 #totalHeightContainer {
@@ -29,4 +30,8 @@
 
 body {
     overflow: hidden;
+}
+
+* {
+    scrollbar-width: thin;
 }
