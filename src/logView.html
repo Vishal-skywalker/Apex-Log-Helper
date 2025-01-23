@@ -26,6 +26,19 @@
             <label for="soql">Show SOQL</label>
             <input type="checkbox" name="soql" id="soql">
         </div>
+        <div class="col-6">
+            <div class="input-group flex-nowrap">
+                <span class="input-group-text" id="addon-wrapping">🔍</span>
+                <input type="text" class="form-control" placeholder="Search..." 
+                    aria-label="Search" aria-describedby="addon-wrapping" id="search">
+                <span class="input-group-text" point-component="searchInfo">
+                    <span>{{at}}</span>/<span>{{total}}</span>
+                </span>
+                <span class="input-group-text d-flex align-items-center" >
+                    <span class="mx-2" id="up">&#129169;</span><span class="mx-2" id="down">&#129171;</span>
+                </span>
+            </div>
+        </div>
     </div>
     <div id="totalHeightContainer" class="pb-5">
         <div id="renderedHeightContainer">

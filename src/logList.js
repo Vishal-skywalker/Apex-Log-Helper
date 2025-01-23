@@ -33,6 +33,6 @@ async function processUserInfo(con) {
 }
 
 async function getLogs(con) {
-    const logs = await con.get(`/services/data/v${apiVersion}.0/query/?q=${encodeURI('SELECT Id, LogUser.Name, LogUserId, LogLength, Operation, Status, DurationMilliseconds, StartTime FROM ApexLog ORDER BY LastModifiedDate DESC')}`);
+    const logs = await con.get(`/services/data/v${apiVersion}.0/query/?q=${encodeURI('SELECT Id, LogUser.Name, LogUserId, LogLength, Operation, Status, DurationMilliseconds, StartTime FROM ApexLog ORDER BY LastModifiedDate DESC LIMIT 50')}`);
     point.attach('apexLogs', logs.records);
 }
