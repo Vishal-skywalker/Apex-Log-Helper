@@ -59,10 +59,14 @@ async function init() {
     const con = await getConnection();
     const logId = getUrlSearchParam('id');
     const logIdKey = `log_${logId}`;
-    let log = sessionStorage.getItem(logIdKey);
+    let log = localStorage.getItem(logIdKey);
     if (!log) {
         log = await con.get(`/services/data/v${apiVersion}.0/tooling/sobjects/ApexLog/${logId}/Body`);
-        sessionStorage.setItem(logIdKey, log);
+        try {
+            localStorage.setItem(logIdKey, log);
+        } catch (error) {
+            console.warn('localStorage is full, not caching log data.', error);
+        }
     }
     logList = parseLog(log);
     logs = JSON.parse(JSON.stringify(logList));
